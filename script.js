@@ -358,6 +358,10 @@ function setFormStatus(message, tone) {
   }
 }
 
+function clearFormStatus() {
+  setFormStatus("", null);
+}
+
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
@@ -618,8 +622,23 @@ function handleFormSubmit(event) {
 
 langButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    clearFormStatus();
     setLanguage(button.dataset.langSwitch);
   });
+});
+
+document.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!(target instanceof Element)) {
+    return;
+  }
+
+  if (target.closest("#contact-form button[type='submit']")) {
+    return;
+  }
+
+  clearFormStatus();
 });
 
 if (form) {

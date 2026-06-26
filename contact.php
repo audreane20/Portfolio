@@ -144,7 +144,7 @@ if ($deliveryMode === 'brevo') {
         exit;
     }
 
-    $brevoSent = sendViaBrevo(
+    $brevoResult = sendViaBrevo(
         $brevoApiKey,
         $senderEmail,
         $senderName,
@@ -155,14 +155,34 @@ if ($deliveryMode === 'brevo') {
         $name
     );
 
-    if (!$brevoSent) {
+    if (!($brevoResult['success'] ?? false)) {
+        logContactAttempt([
+            'channel' => 'brevo',
+            'success' => false,
+            'from_email' => $email,
+            'from_name' => $name,
+            'to_email' => $contactEmail,
+            'subject' => $subject,
+            'result' => $brevoResult,
+        ]);
+
         http_response_code(500);
         echo json_encode([
             'success' => false,
-            'message' => $t['mail_failed'],
+            'message' => buildBrevoErrorMessage($t['mail_failed'], $brevoResult),
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit;
     }
+
+    logContactAttempt([
+        'channel' => 'brevo',
+        'success' => true,
+        'from_email' => $email,
+        'from_name' => $name,
+        'to_email' => $contactEmail,
+        'subject' => $subject,
+        'result' => $brevoResult,
+    ]);
 
     echo json_encode([
         'success' => true,
@@ -181,6 +201,15 @@ if ($deliveryMode === 'php_mail') {
     $mailSent = @mail($contactEmail, $subject, $body, implode("\r\n", $headers));
 
     if (!$mailSent) {
+        logContactAttempt([
+            'channel' => 'php_mail',
+            'success' => false,
+            'from_email' => $email,
+            'from_name' => $name,
+            'to_email' => $contactEmail,
+            'subject' => $subject,
+        ]);
+
         http_response_code(500);
         echo json_encode([
             'success' => false,
@@ -188,6 +217,15 @@ if ($deliveryMode === 'php_mail') {
         ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit;
     }
+
+    logContactAttempt([
+        'channel' => 'php_mail',
+        'success' => true,
+        'from_email' => $email,
+        'from_name' => $name,
+        'to_email' => $contactEmail,
+        'subject' => $subject,
+    ]);
 
     echo json_encode([
         'success' => true,
@@ -243,7 +281,7 @@ function sendViaBrevo(
     string $body,
     string $replyToEmail,
     string $replyToName
-): bool {
+): array {
     $safeBody = htmlspecialchars($body, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
     $htmlBody = '<html><body><pre style="font-family: Arial, sans-serif; white-space: pre-wrap;">'
         . nl2br($safeBody)
@@ -270,7 +308,10 @@ function sendViaBrevo(
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
     if ($payload === false) {
-        return false;
+        return [
+            'success' => false,
+            'reason' => 'payload_encoding_failed',
+        ];
     }
 
     $options = [
@@ -292,15 +333,74 @@ function sendViaBrevo(
     $result = @file_get_contents('https://api.brevo.com/v3/smtp/email', false, $context);
 
     if ($result === false || !isset($http_response_header) || !is_array($http_response_header)) {
-        return false;
+        return [
+            'success' => false,
+            'reason' => 'request_failed',
+        ];
     }
+
+    $statusCode = null;
 
     foreach ($http_response_header as $header) {
         if (preg_match('/^HTTP\/\S+\s+(\d{3})/', $header, $matches) === 1) {
             $statusCode = (int) $matches[1];
-            return $statusCode >= 200 && $statusCode < 300;
+            break;
         }
     }
 
-    return false;
+    $decoded = json_decode($result, true);
+
+    if ($statusCode !== null && $statusCode >= 200 && $statusCode < 300) {
+        return [
+            'success' => true,
+            'status' => $statusCode,
+            'response' => $decoded,
+        ];
+    }
+
+    return [
+        'success' => false,
+        'status' => $statusCode,
+        'response' => is_array($decoded) ? $decoded : null,
+        'raw' => $result,
+    ];
+}
+
+function buildBrevoErrorMessage(string $fallback, array $brevoResult): string
+{
+    $response = $brevoResult['response'] ?? null;
+
+    if (is_array($response)) {
+        if (!empty($response['message']) && is_string($response['message'])) {
+            return $fallback . ' Brevo: ' . $response['message'];
+        }
+
+        if (!empty($response['code']) && is_string($response['code'])) {
+            return $fallback . ' Brevo code: ' . $response['code'];
+        }
+    }
+
+    if (!empty($brevoResult['status'])) {
+        return $fallback . ' HTTP ' . $brevoResult['status'] . '.';
+    }
+
+    return $fallback;
+}
+
+function logContactAttempt(array $data): void
+{
+    $logPath = __DIR__ . DIRECTORY_SEPARATOR . 'contact-delivery.log';
+    $entry = [
+        'timestamp' => gmdate('c'),
+        'ip' => (string) ($_SERVER['REMOTE_ADDR'] ?? ''),
+        'user_agent' => (string) ($_SERVER['HTTP_USER_AGENT'] ?? ''),
+    ] + $data;
+
+    $encoded = json_encode($entry, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+    if ($encoded === false) {
+        return;
+    }
+
+    @file_put_contents($logPath, $encoded . PHP_EOL, FILE_APPEND | LOCK_EX);
 }
