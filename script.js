@@ -1,6 +1,6 @@
 const translations = {
   en: {
-    pageTitle: "Audreane Deschenes | Portfolio",
+    pageTitle: "Audr\u00e9ane Deschenes | Portfolio",
     pageDescription:
       "A personal portfolio showcasing selected projects, skills, bilingual content, and contact information.",
     nav: {
@@ -12,7 +12,7 @@ const translations = {
     },
     hero: {
       eyebrow: "Portfolio 2026",
-      title: "Building digital work with clarity, taste, and purpose.",
+      title: "Hi, I'm Audr\u00e9ane. I build websites, mobile apps, and desktop applications.",
       copy:
         "I design and build experiences that feel sharp, useful, and human. Here are a few projects that show how I think and what I can ship.",
       ctaProjects: "View Projects",
@@ -26,11 +26,12 @@ const translations = {
       eyebrow: "Selected Work",
       title: "Projects I built to solve real problems",
       copy:
-        "A mix of client-facing websites, internal tools, mobile work, and custom software built across web, Flutter, and desktop platforms.",
+        "A mix of client-facing websites, internal tools, school projects, mobile work, and custom software built across web, Flutter, and desktop platforms.",
       meta: "Featured Project",
       liveDemo: "Live Demo",
       source: "Source",
       sourceOnly: "View Source",
+      privateRepo: "Private Repository",
       items: [
         {
           title: "UBarbershop Website",
@@ -39,7 +40,8 @@ const translations = {
           tags: ["PHP", "Twig", "HTML", "CSS", "JavaScript"],
           imageUrl: "../UBarbershop/public/images/Salon/fullSalon.png",
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         },
         {
           title: "UBarbershop Mobile App",
@@ -48,24 +50,37 @@ const translations = {
           tags: ["Flutter", "Dart", "Internal Tools", "Mobile App"],
           imageUrl: "assets/ubarbershop-mobile-logo.png",
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         },
         {
           title: "Scheduling App",
           description:
             "A mobile plumbing scheduling application created for a real client in collaboration with two other developers, focused on organizing appointments and workflow management.",
           tags: ["Mobile App", "Team Project", "Client Work", "Scheduling"],
+          imageUrl: "assets/scheduling-app-preview.png",
+          imageContain: true,
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         },
         {
           title: "Clemexique Website",
           description:
             "A multilingual Slim 4 real estate website focused on property discovery in Mexico, with listing pages, property detail galleries, inquiry flows, car rental information, and property management content.",
           tags: ["PHP", "Twig", "HTML", "CSS", "JavaScript"],
-          imageUrl: "../clemexique/public/Images/Puerto%20Aventuras.png",
+          imageUrl: "assets/clemexique-frontpage.png",
           liveUrl: "#",
           sourceUrl: "https://github.com/audreane20/clemexique"
+        },
+        {
+          title: "Unix Project",
+          description:
+            "A Unix and shell-based school project built around an interactive Bash menu for system status checks, backup scheduling, network and service tools, user management, and file management tasks.",
+          tags: ["Shell", "Unix", "Course Project"],
+          imageUrl: "assets/unix-project-preview.svg",
+          liveUrl: "#",
+          sourceUrl: "https://github.com/audreane20/Unix-Project"
         },
         {
           title: "Comfy Cozy Cafe",
@@ -74,7 +89,8 @@ const translations = {
           tags: ["C#", "Desktop App", "Software Development"],
           imageUrl: "assets/comfy-cozy-cafe-preview.png",
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         }
       ]
     },
@@ -106,7 +122,7 @@ const translations = {
       cardOneTitle: "Languages and Frameworks",
       cardOneCopy: "Java, C#, JavaScript, CSS, HTML, SQL, Dart, Flutter, PHP",
       cardTwoTitle: "Platforms and Services",
-      cardTwoCopy: "Firebase, EmailJS, Brevo",
+      cardTwoCopy: "Firebase, EmailJS, Brevo, Google reCAPTCHA",
       cardThreeTitle: "Databases",
       cardThreeCopy: "Microsoft SQL Server, MariaDB, Firebase Firestore",
       cardFourTitle: "API Integrations",
@@ -153,7 +169,7 @@ const translations = {
     }
   },
   fr: {
-    pageTitle: "Audreane Deschenes | Portfolio",
+    pageTitle: "Audr\u00e9ane Deschenes | Portfolio",
     pageDescription:
       "Un portfolio personnel presentant des projets, des competences, du contenu bilingue et des informations de contact.",
     nav: {
@@ -165,7 +181,7 @@ const translations = {
     },
     hero: {
       eyebrow: "Portfolio 2026",
-      title: "Creer des projets numeriques avec clarte, style et intention.",
+      title: "Bonjour, je m'appelle Audr\u00e9ane. Je cree des sites web, des applis mobiles et des applications de bureau.",
       copy:
         "Je concois et developpe des experiences utiles, soignees et humaines. Voici quelques projets qui montrent ma facon de reflechir et ce que je peux livrer.",
       ctaProjects: "Voir les projets",
@@ -179,11 +195,12 @@ const translations = {
       eyebrow: "Travaux selectionnes",
       title: "Des projets que j'ai crees pour repondre a de vrais besoins",
       copy:
-        "Un melange de sites web orientes client, d'outils internes, de projets mobiles et de logiciels sur mesure realises en web, Flutter et bureau.",
+        "Un melange de sites web orientes client, d'outils internes, de projets scolaires, de projets mobiles et de logiciels sur mesure realises en web, Flutter et bureau.",
       meta: "Projet en vedette",
       liveDemo: "Demo en ligne",
       source: "Code source",
       sourceOnly: "Voir le code",
+      privateRepo: "Depot prive",
       items: [
         {
           title: "Site web UBarbershop",
@@ -192,7 +209,8 @@ const translations = {
           tags: ["PHP", "Twig", "HTML", "CSS", "JavaScript"],
           imageUrl: "../UBarbershop/public/images/Salon/fullSalon.png",
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         },
         {
           title: "Application mobile UBarbershop",
@@ -201,24 +219,37 @@ const translations = {
           tags: ["Flutter", "Dart", "Outils internes", "Application mobile"],
           imageUrl: "assets/ubarbershop-mobile-logo.png",
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         },
         {
           title: "Scheduling App",
           description:
             "Une application mobile de planification en plomberie creee pour un vrai client en collaboration avec deux autres developpeurs, axee sur l'organisation des rendez-vous et des flux de travail.",
           tags: ["Application mobile", "Projet d'equipe", "Client reel", "Planification"],
+          imageUrl: "assets/scheduling-app-preview.png",
+          imageContain: true,
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         },
         {
           title: "Site web Clemexique",
           description:
             "Un site immobilier multilingue avec Slim 4, centre sur la decouverte de proprietes au Mexique, avec pages d'annonces, galeries de proprietes, demandes d'information, location de voiture et contenu de gestion immobiliere.",
           tags: ["PHP", "Twig", "HTML", "CSS", "JavaScript"],
-          imageUrl: "../clemexique/public/Images/Puerto%20Aventuras.png",
+          imageUrl: "assets/clemexique-frontpage.png",
           liveUrl: "#",
           sourceUrl: "https://github.com/audreane20/clemexique"
+        },
+        {
+          title: "Projet Unix",
+          description:
+            "Un projet scolaire base sur Unix et le shell, construit autour d'un menu interactif en Bash pour verifier l'etat du systeme, planifier des sauvegardes, gerer le reseau, les services, les utilisateurs et les fichiers.",
+          tags: ["Shell", "Unix", "Projet scolaire"],
+          imageUrl: "assets/unix-project-preview.svg",
+          liveUrl: "#",
+          sourceUrl: "https://github.com/audreane20/Unix-Project"
         },
         {
           title: "Comfy Cozy Cafe",
@@ -227,7 +258,8 @@ const translations = {
           tags: ["C#", "Application bureau", "Developpement logiciel"],
           imageUrl: "assets/comfy-cozy-cafe-preview.png",
           liveUrl: "#",
-          sourceUrl: "#"
+          sourceUrl: "#",
+          privateCode: true
         }
       ]
     },
@@ -259,7 +291,7 @@ const translations = {
       cardOneTitle: "Langages et frameworks",
       cardOneCopy: "Java, C#, JavaScript, CSS, HTML, SQL, Dart, Flutter, PHP",
       cardTwoTitle: "Plateformes et services",
-      cardTwoCopy: "Firebase, EmailJS, Brevo",
+      cardTwoCopy: "Firebase, EmailJS, Brevo, Google reCAPTCHA",
       cardThreeTitle: "Bases de donnees",
       cardThreeCopy: "Microsoft SQL Server, MariaDB, Firebase Firestore",
       cardFourTitle: "Integrations API",
@@ -393,9 +425,13 @@ function renderProjects() {
         );
       }
 
+      if (project.privateCode) {
+        links.push(`<span class="project-link-tag">${projectContent.privateRepo}</span>`);
+      }
+
       return `
         <article class="project-card">
-          <div class="project-visual" aria-hidden="true">
+          <div class="project-visual${project.imageContain ? " project-visual-contain" : ""}" aria-hidden="true">
             ${project.imageUrl ? `<img src="${project.imageUrl}" alt="${project.title} preview">` : ""}
           </div>
           <div class="project-meta">${projectContent.meta}</div>

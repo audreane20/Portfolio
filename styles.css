@@ -135,11 +135,12 @@ body::before {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.5fr 0.9fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.6fr);
   gap: 2rem;
-  padding: 2rem;
+  padding: 2.5rem;
   border-radius: 28px;
   overflow: hidden;
+  align-items: center;
 }
 
 .hero-copy h1,
@@ -152,8 +153,34 @@ body::before {
 }
 
 .hero-copy h1 {
-  max-width: 10ch;
-  font-size: clamp(3rem, 8vw, 6.4rem);
+  max-width: 16ch;
+  font-size: clamp(2.35rem, 3.8vw, 4.2rem);
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+html[lang="fr"] .hero {
+  grid-template-columns: minmax(0, 1.75fr) minmax(240px, 0.5fr);
+  align-items: start;
+}
+
+html[lang="fr"] .hero-copy h1 {
+  max-width: 18ch;
+  font-size: clamp(2.1rem, 3.35vw, 3.7rem);
+  line-height: 1.06;
+}
+
+html[lang="fr"] .hero-panel {
+  align-self: center;
+}
+
+.hero-copy {
+  min-width: 0;
+  max-width: none;
+}
+
+.hero-text {
+  max-width: 58ch;
 }
 
 .eyebrow,
@@ -224,7 +251,8 @@ body::before {
 }
 
 .hero-panel {
-  align-self: end;
+  align-self: center;
+  max-width: 320px;
   padding: 1.5rem;
   border-radius: 24px;
   background:
@@ -315,6 +343,15 @@ body::before {
   display: block;
 }
 
+.project-visual-contain {
+  background: #050505;
+}
+
+.project-visual-contain img {
+  object-fit: contain;
+  background: #050505;
+}
+
 .project-visual::after {
   content: "";
   position: absolute;
@@ -336,9 +373,41 @@ body::before {
 }
 
 .project-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
   color: var(--text);
   font-weight: 700;
   text-decoration: none;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.68);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.project-link-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 700;
+  border: 1px dashed rgba(27, 27, 24, 0.18);
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.project-links a:hover,
+.project-links a:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(27, 27, 24, 0.16);
 }
 
 .tag-row {
@@ -553,7 +622,11 @@ body::before {
   }
 
   .hero-copy h1 {
-    max-width: 12ch;
+    max-width: 100%;
+  }
+
+  .hero-panel {
+    max-width: 100%;
   }
 }
 
